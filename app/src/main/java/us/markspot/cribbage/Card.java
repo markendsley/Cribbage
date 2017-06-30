@@ -7,6 +7,8 @@ package us.markspot.cribbage;
 public abstract class Card {
 
     public int value;
+    public boolean outOfDeck = false;
+    public boolean inPlay = false;
 
     public enum suit{
         HEART, SPADE, CLUB, DIAMOND;
@@ -17,5 +19,23 @@ public abstract class Card {
             this.suitCode = suitCode;
         }
 
+    }
+
+    public Card(int value){
+        this.value = value;
+    }
+
+    public draw(){
+        this.outOfDeck = true;
+    }
+    public boolean isOutOfDeck()
+    {
+        return this.outOfDeck;
+    }
+    public play(){
+        this.inPlay = true;
+    }
+    public boolean isInPlay(){
+        return this.inPlay;
     }
 }

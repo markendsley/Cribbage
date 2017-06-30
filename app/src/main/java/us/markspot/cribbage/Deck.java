@@ -97,6 +97,7 @@ public class Deck {
 
     }
 
+    //Chooses Random Card That Is Still In Deck
     public Card getRandomCard(){
 
         Random rand1 = new Random();

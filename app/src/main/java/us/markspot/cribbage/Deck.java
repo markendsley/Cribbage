@@ -17,7 +17,8 @@ public class Deck {
 
     public Card[][] deck = new Card[3][13];
 
-    public Deck(){
+    public Deck()
+    {
 
 
         //Add Hearts
@@ -98,7 +99,9 @@ public class Deck {
     }
 
     //Chooses Random Card That Is Still In Deck
-    public Card getRandomCard(){
+
+    public Card getRandomCard()
+    {
 
         Random rand1 = new Random();
         Random rand2 = new Random();

@@ -13,20 +13,23 @@ public class Card {
     public boolean isQueen = false;
     public boolean isJack = false;
 
-    public enum Suit{
+    public enum Suit
+    {
         HEART, SPADE, CLUB, DIAMOND;
     }
 
     Suit suit;
 
     //Constructor For Numbered Cards
-    public Card(int value, Suit suit){
+    public Card(int value, Suit suit)
+    {
         this.value = value;
         this.suit = suit;
     }
 
     //Constructor For Royal Cards
-    public Card(int value, Suit suit, int royalty){
+    public Card(int value, Suit suit, int royalty)
+    {
         this.value = value;
         this.suit = suit;
         if(royalty == 0)
@@ -39,7 +42,8 @@ public class Card {
     }
 
     //Take Card From Deck
-    public void draw(){
+    public void draw()
+    {
         this.outOfDeck = true;
     }
 
@@ -50,17 +54,20 @@ public class Card {
     }
 
     //Set Card In Play
-    public void play(){
+    public void play()
+    {
         this.inPlay = true;
     }
 
     //Ask If Card Is In Play
-    public boolean isInPlay(){
+    public boolean isInPlay()
+    {
         return this.inPlay;
     }
 
     //Ask What Suit Card Is
-    public Suit getSuit(){
+    public Suit getSuit()
+    {
         return suit;
     }
 }

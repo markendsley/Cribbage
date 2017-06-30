@@ -19,11 +19,13 @@ public class Card {
 
     Suit suit;
 
+    //Constructor For Numbered Cards
     public Card(int value, Suit suit){
         this.value = value;
         this.suit = suit;
     }
 
+    //Constructor For Royal Cards
     public Card(int value, Suit suit, int royalty){
         this.value = value;
         this.suit = suit;
@@ -36,19 +38,28 @@ public class Card {
 
     }
 
+    //Take Card From Deck
     public void draw(){
         this.outOfDeck = true;
     }
+
+    //Ask If Card Is In Deck
     public boolean isOutOfDeck()
     {
         return this.outOfDeck;
     }
+
+    //Set Card In Play
     public void play(){
         this.inPlay = true;
     }
+
+    //Ask If Card Is In Play
     public boolean isInPlay(){
         return this.inPlay;
     }
+
+    //Ask What Suit Card Is
     public Suit getSuit(){
         return suit;
     }

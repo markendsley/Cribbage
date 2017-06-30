@@ -99,7 +99,6 @@ public class Deck {
     }
 
     //Chooses Random Card That Is Still In Deck
-
     public Card getRandomCard()
     {
 
@@ -119,6 +118,24 @@ public class Deck {
         return deck[a][b];
 
 
+    }
+
+    //Returns Number of Remaining Cards In The Deck
+    public int cardsLeft()
+    {
+        int count = 0;
+        int j = 0;
+
+        for(int i=0 ; i<4 ; i++)
+        {
+            for(j=0 ; i<13 ; j++)
+            {
+                if(deck[i][j].isOutOfDeck() == false)
+                    count++;
+            }
+        }
+
+        return count;
     }
 
 

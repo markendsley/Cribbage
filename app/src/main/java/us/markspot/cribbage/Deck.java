@@ -138,6 +138,25 @@ public class Deck {
         return count;
     }
 
+    //Returns True Deck Is Empty, False Otherwise
+    public boolean isEmpty()
+    {
+        int count = 0;
+        int j = 0;
+
+        for(int i=0 ; i<4 ; i++)
+        {
+            for(j=0 ; i<13 ; j++)
+            {
+                if(deck[i][j].isOutOfDeck() == false)
+                    count++;
+            }
+        }
+        if(count == 0)
+            return true;
+        else
+            return false;
+    }
 
 
 

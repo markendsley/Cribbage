@@ -18,5 +18,32 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
+        <ImageButton
+            android:id="@+id/StartGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="158dp"
+            app:srcCompat="@drawable/start"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/resume"
+            android:layout_below="@+id/StartGame"
+            android:layout_alignStart="@+id/StartGame"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/imageButton2"
+            android:layout_below="@+id/imageButton2"
+            app:srcCompat="@drawable/difficulty"
+            android:background="@null"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0142FE">
 
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/backtwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            app:srcCompat="@drawable/back" />
+
+        <ImageButton
+            android:id="@+id/ivtwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="88dp"
+            app:srcCompat="@drawable/background_fill"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/backtwo"
+            android:layout_marginStart="21dp"
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/ivone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="53dp"
+            app:srcCompat="@drawable/background_fill"
+            android:layout_below="@+id/ivthree"
+            android:layout_toEndOf="@+id/ivtwo"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/ivthree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ivtwo"
+            android:layout_marginBottom="44dp"
+            android:layout_toStartOf="@+id/ivone"
+            app:srcCompat="@drawable/background_fill"
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/ivfour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/background_fill"
+            android:layout_below="@+id/ivfive"
+            android:layout_alignStart="@+id/ivone"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/ivfive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            app:srcCompat="@drawable/background_fill"
+            android:layout_above="@+id/ivthree"
+            android:layout_alignStart="@+id/ivthree"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/ivsix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ivfive"
+            android:layout_alignStart="@+id/ivfour"
+
+            app:srcCompat="@drawable/background_fill"
+            android:background="@null"/>
+    </RelativeLayout>
 </LinearLayout>

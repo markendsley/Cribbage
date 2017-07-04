@@ -15,7 +15,7 @@ import static us.markspot.cribbage.Card.Suit.SPADE;
 
 public class Deck {
 
-    public Card[][] deck = new Card[3][13];
+    public Card[][] deck = new Card[4][13];
 
     public Deck()
     {
@@ -108,7 +108,7 @@ public class Deck {
         int a = rand1.nextInt(4);
         int b = rand2.nextInt(13);
 
-        while(deck[a][b].isOutOfDeck() != true){
+        while(deck[a][b].isOutOfDeck() == true){
             a = rand1.nextInt(4);
             b = rand2.nextInt(13);
         }

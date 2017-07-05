@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mImageView.setImageBitmap(card1);
 
-
+                Card cardv1 = gameCard;
 
 
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mImageView2.setImageBitmap(card2);
 
-
+                Card cardv2 = gameCard;
 
 
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mImageView3.setImageBitmap(card3);
 
-
+                Card cardv3 = gameCard;
 
 
 
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mImageView4.setImageBitmap(card4);
 
-
+                Card cardv4 = gameCard;
 
 
 
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mImageView5.setImageBitmap(card5);
 
-
+                Card cardv5 = gameCard;
 
 
 
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mImageView6.setImageBitmap(card6);
 
-
+                Card cardv6 = gameCard;
 
 
 
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    //Chooses the correct image for a card that is drawn from the deck.
     public Bitmap bitmapChooser(Deck deck)
     {
         Bitmap bitmap;

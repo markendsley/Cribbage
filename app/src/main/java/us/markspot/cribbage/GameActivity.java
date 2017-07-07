@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import java.util.Random;
+
 import static us.markspot.cribbage.Card.Suit.CLUB;
 import static us.markspot.cribbage.Card.Suit.DIAMOND;
 import static us.markspot.cribbage.Card.Suit.HEART;
@@ -41,9 +43,11 @@ public class GameActivity extends AppCompatActivity {
     Card cardv5;
     Card cardv6;
 
+    Card[] enemyHand = new Card[6];
+
     Crib crib;
 
-
+    Deck deck = new Deck();
     Card gameCard;
 
     int cribDebt = 2;
@@ -58,155 +62,11 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game2);
         addListenerOnButtonFour();
 
-
-
-        Context mContext = getApplicationContext();
-        Resources mResources = getResources();
-        RelativeLayout mRelativeLayout = (RelativeLayout) findViewById(R.id.rl);
-        mImageView = (ImageButton) findViewById(R.id.ivone);
-
-        Deck deck = new Deck();
         crib = new Crib();
 
 
 
-
-        Bitmap card1 = bitmapChooser(deck);
-
-        Bitmap card1Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(card1Print);
-
-
-
-        canvas.drawBitmap(card1, 20, 20, null);
-
-        mImageView.setImageBitmap(card1);
-
-        cardv1 = gameCard;
-        cardv1.isOnTable = true;
-
-
-
-
-        mImageView2 = (ImageButton) findViewById(R.id.ivtwo);
-
-
-
-        Bitmap card2 = bitmapChooser(deck);
-
-        Bitmap card2Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas2 = new Canvas(card2Print);
-
-
-
-        canvas2.drawBitmap(card2, 20, 20, null);
-
-        mImageView2.setImageBitmap(card2);
-
-        cardv2 = gameCard;
-        cardv2.isOnTable = true;
-
-
-
-
-
-        mImageView3 = (ImageButton) findViewById(R.id.ivthree);
-
-
-
-        Bitmap card3 = bitmapChooser(deck);
-
-        Bitmap card3Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas3 = new Canvas(card3Print);
-
-
-
-        canvas3.drawBitmap(card3, 20, 20, null);
-
-        mImageView3.setImageBitmap(card3);
-
-        cardv3 = gameCard;
-        cardv3.isOnTable = true;
-
-
-
-
-
-
-        mImageView4 = (ImageButton) findViewById(R.id.ivfour);
-
-
-
-        Bitmap card4 = bitmapChooser(deck);
-
-        Bitmap card4Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas4 = new Canvas(card4Print);
-
-
-
-        canvas4.drawBitmap(card4, 20, 20, null);
-
-        mImageView4.setImageBitmap(card4);
-
-        cardv4 = gameCard;
-        cardv4.isOnTable = true;
-
-
-
-
-
-
-
-        mImageView5 = (ImageButton) findViewById(R.id.ivfive);
-
-
-
-        Bitmap card5 = bitmapChooser(deck);
-
-        Bitmap card5Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas5 = new Canvas(card5Print);
-
-
-
-        canvas5.drawBitmap(card5, 20, 20, null);
-
-        mImageView5.setImageBitmap(card5);
-
-        cardv5 = gameCard;
-        cardv5.isOnTable = true;
-
-
-
-
-
-
-
-
-
-        mImageView6 = (ImageButton) findViewById(R.id.ivsix);
-
-
-
-        Bitmap card6 = bitmapChooser(deck);
-
-        Bitmap card6Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas6 = new Canvas(card6Print);
-
-
-
-        canvas6.drawBitmap(card6, 20, 20, null);
-
-        mImageView6.setImageBitmap(card6);
-
-        cardv6 = gameCard;
-        cardv6.isOnTable = true;
-
+        drawPlayerHand();
 
 
 
@@ -227,6 +87,14 @@ public class GameActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void dealEnemyHand()
+    {
+        for(int i=0;i<6;i++)
+        {
+            enemyHand[i] = deck.getRandomCard();
+        }
     }
 
 
@@ -390,7 +258,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    public void enemyChooseCribCards()
+    {
+        Random rand1 = new Random();
+        int a;
 
+        for(int i=0 ; i<2 ; i++)
+        {
+            a = rand1.nextInt(6);
+            enemyHand[a].sendToCrib();
+            drawCribCard(crib.findEmptySlot());
+            crib.insertCard(enemyHand[a]);
+        }
+    }
 
 
 
@@ -456,11 +336,11 @@ public class GameActivity extends AppCompatActivity {
 
 
     //Chooses the correct image for a card that is drawn from the deck.
-    public Bitmap bitmapChooser(Deck deck)
+    public Bitmap bitmapChooser(Deck deck, Card gameCard)
     {
         Bitmap bitmap;
 
-        gameCard = deck.getRandomCard();
+
 
         if(gameCard.value == 1 && gameCard.getSuit() == CLUB)
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ace_of_clubs);
@@ -585,7 +465,73 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void drawPlayerHand()
+    {
+        mImageView = (ImageButton) findViewById(R.id.ivone);
+        gameCard = deck.getRandomCard();
+        Bitmap card1 = bitmapChooser(deck, gameCard);
+        Bitmap card1Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(card1Print);
+        canvas.drawBitmap(card1, 20, 20, null);
+        mImageView.setImageBitmap(card1);
+        cardv1 = gameCard;
+        cardv1.isOnTable = true;
 
+
+        mImageView2 = (ImageButton) findViewById(R.id.ivtwo);
+        gameCard = deck.getRandomCard();
+        Bitmap card2 = bitmapChooser(deck, gameCard);
+        Bitmap card2Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas2 = new Canvas(card2Print);
+        canvas2.drawBitmap(card2, 20, 20, null);
+        mImageView2.setImageBitmap(card2);
+        cardv2 = gameCard;
+        cardv2.isOnTable = true;
+
+
+        mImageView3 = (ImageButton) findViewById(R.id.ivthree);
+        gameCard = deck.getRandomCard();
+        Bitmap card3 = bitmapChooser(deck, gameCard);
+        Bitmap card3Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas3 = new Canvas(card3Print);
+        canvas3.drawBitmap(card3, 20, 20, null);
+        mImageView3.setImageBitmap(card3);
+        cardv3 = gameCard;
+        cardv3.isOnTable = true;
+
+
+        mImageView4 = (ImageButton) findViewById(R.id.ivfour);
+        gameCard = deck.getRandomCard();
+        Bitmap card4 = bitmapChooser(deck, gameCard);
+        Bitmap card4Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas4 = new Canvas(card4Print);
+        canvas4.drawBitmap(card4, 20, 20, null);
+        mImageView4.setImageBitmap(card4);
+        cardv4 = gameCard;
+        cardv4.isOnTable = true;
+
+
+        mImageView5 = (ImageButton) findViewById(R.id.ivfive);
+        gameCard = deck.getRandomCard();
+        Bitmap card5 = bitmapChooser(deck, gameCard);
+        Bitmap card5Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas5 = new Canvas(card5Print);
+        canvas5.drawBitmap(card5, 20, 20, null);
+        mImageView5.setImageBitmap(card5);
+        cardv5 = gameCard;
+        cardv5.isOnTable = true;
+
+
+        mImageView6 = (ImageButton) findViewById(R.id.ivsix);
+        gameCard = deck.getRandomCard();
+        Bitmap card6 = bitmapChooser(deck, gameCard);
+        Bitmap card6Print = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas6 = new Canvas(card6Print);
+        canvas6.drawBitmap(card6, 20, 20, null);
+        mImageView6.setImageBitmap(card6);
+        cardv6 = gameCard;
+        cardv6.isOnTable = true;
+    }
 
 
 }

@@ -9,9 +9,12 @@ public class Card {
     public int value;
     public boolean outOfDeck = false;
     public boolean inPlay = false;
+    public boolean isInCrib = false;
     public boolean isKing = false;
     public boolean isQueen = false;
     public boolean isJack = false;
+    public boolean isOnTable = false;
+
 
     public enum Suit
     {
@@ -69,5 +72,22 @@ public class Card {
     public Suit getSuit()
     {
         return suit;
+    }
+
+    //Returns If Card Is In Crib
+    public boolean isInCrib()
+    {
+        return isInCrib;
+    }
+    //Sets Card To Being In Crib
+    public void sendToCrib()
+    {
+        isInCrib = true;
+    }
+
+    //Un Sets Card From Being In Crib
+    public void removeFromCrib()
+    {
+        isInCrib = false;
     }
 }

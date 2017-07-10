@@ -14,6 +14,8 @@ public class Card {
     public boolean isQueen = false;
     public boolean isJack = false;
     public boolean isOnTable = false;
+    public boolean isPlayers = false;
+    public boolean isEnemys = false;
 
 
     public enum Suit

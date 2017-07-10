@@ -117,5 +117,70 @@
             android:background="@null"
             app:srcCompat="@drawable/blank_card" />
 
+        <ImageView
+            android:id="@+id/playone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="104dp"
+            app:srcCompat="@drawable/blank_card"
+            android:layout_below="@+id/cribthree"
+            android:layout_toStartOf="@+id/ivfive" />
+
+        <ImageView
+            android:id="@+id/playtwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playone"
+            android:layout_toEndOf="@+id/playone"
+            app:srcCompat="@drawable/blank_card" />
+
+        <ImageView
+            android:id="@+id/playthree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playtwo"
+            android:layout_toEndOf="@+id/playtwo"
+            app:srcCompat="@drawable/blank_card" />
+
+        <ImageView
+            android:id="@+id/playfour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playthree"
+            android:layout_toEndOf="@+id/playthree"
+            app:srcCompat="@drawable/blank_card" />
+
+        <ImageView
+            android:id="@+id/playfive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playfour"
+            android:layout_toEndOf="@+id/playfour"
+            app:srcCompat="@drawable/blank_card" />
+
+        <ImageView
+            android:id="@+id/playsix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playfive"
+            android:layout_toEndOf="@+id/playfive"
+            app:srcCompat="@drawable/blank_card" />
+
+        <ImageView
+            android:id="@+id/playseven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playsix"
+            android:layout_toEndOf="@+id/playsix"
+            app:srcCompat="@drawable/blank_card" />
+
+        <ImageView
+            android:id="@+id/playeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/playseven"
+            android:layout_toEndOf="@+id/playseven"
+            app:srcCompat="@drawable/blank_card" />
+
     </RelativeLayout>
 </LinearLayout>

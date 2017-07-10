@@ -37,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     ImageButton mImageView5;
     ImageButton mImageView6;
 
+    ImageView[] playImages = new ImageView[8];
+
     ImageView splitImageView;
 
     Card cardv1;
@@ -47,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
     Card cardv6;
 
     Card[] enemyHand = new Card[6];
+    Card[] playerHand = new Card[6];
 
     Crib crib;
 
@@ -57,6 +60,16 @@ public class GameActivity extends AppCompatActivity {
     int cribDebt = 2;
     int playerScore = 0;
     int enemyScore = 0;
+
+    int playerNumberCardsInPlay = 0;
+    int enemyNumberCardsInPlay = 0;
+    int numberCardsInPlay = 0;
+
+    Card[] cardsInPlay = new Card[8];
+    boolean playerTurn = true;
+
+
+    int roundCounter = 0;
 
 
     @Override
@@ -93,6 +106,9 @@ public class GameActivity extends AppCompatActivity {
 
         enemyChooseCribCards();
         drawSplitCard();
+        createPlayImages();
+
+        addPlayListener1();
 
     }
 
@@ -102,6 +118,8 @@ public class GameActivity extends AppCompatActivity {
         {
             enemyHand[i] = deck.getRandomCard();
             enemyHand[i].isOnTable = true;
+            enemyHand[i].isEnemys = true;
+
         }
     }
 
@@ -146,6 +164,153 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+
+    public void addPlayListener1() {
+
+        imageButton2 = (ImageButton) findViewById(R.id.ivone);
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+            if(playerHand[0].isOnTable && (playerHand[0].value + roundCounter <= 31) && playerTurn == true)
+                {
+                    cardsInPlay[numberCardsInPlay] = playerHand[0];
+                    playerHand[0].inPlay = true;
+                    playerHand[0].isOnTable = false;
+
+                    Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
+
+                    imageButton2.setImageBitmap(bitmap2);
+
+                    setPlayImage(playerHand[0]);
+
+                    roundCounter += playerHand[0].value;
+
+
+                }
+
+
+            }
+
+        });
+
+    }
+
+    public void addPlayListener2() {
+
+        imageButton2 = (ImageButton) findViewById(R.id.ivtwo);
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+
+
+            }
+
+        });
+
+    }
+
+    public void addPlayListener3() {
+
+        imageButton2 = (ImageButton) findViewById(R.id.ivthree);
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+
+
+            }
+
+        });
+
+    }
+
+    public void addPlayListener4() {
+
+        imageButton2 = (ImageButton) findViewById(R.id.ivfour);
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+
+
+            }
+
+        });
+
+    }
+
+    public void addPlayListener5() {
+
+        imageButton2 = (ImageButton) findViewById(R.id.ivfive);
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+
+
+            }
+
+        });
+
+    }
+
+    public void addPlayListener6() {
+
+        imageButton2 = (ImageButton) findViewById(R.id.ivsix);
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+
+
+            }
+
+        });
+
+    }
+
+
+    public void setPlayImage(Card card)
+    {
+        Bitmap bitmap2 = bitmapChooser(deck,card);
+
+        playImages[numberCardsInPlay].setImageBitmap(bitmap2);
+
+
+    }
+
+    public void createPlayImages()
+    {
+        playImages[0] = (ImageView) findViewById(R.id.playone);
+        playImages[1] = (ImageView) findViewById(R.id.playtwo);
+        playImages[2] = (ImageView) findViewById(R.id.playthree);
+        playImages[3] = (ImageView) findViewById(R.id.playfour);
+        playImages[4] = (ImageView) findViewById(R.id.playfive);
+        playImages[5] = (ImageView) findViewById(R.id.playsix);
+        playImages[6] = (ImageView) findViewById(R.id.playseven);
+        playImages[7] = (ImageView) findViewById(R.id.playeight);
+    }
+
+
+
+
+
+
+
+
     public void addCribListener1() {
 
         imageButton2 = (ImageButton) findViewById(R.id.ivone);
@@ -154,10 +319,10 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                if(cardv1.isOnTable && cribDebt != 0)
+                if(playerHand[0].isOnTable && cribDebt != 0)
                 {
-                    chooseCribCard(mImageView, cardv1, crib);
-                    cardv1.isOnTable = false;
+                    chooseCribCard(mImageView, playerHand[0], crib);
+                    playerHand[0].isOnTable = false;
                     cribDebt--;
                 }
                 if(cribDebt == 0)
@@ -177,10 +342,10 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                if(cardv2.isOnTable && cribDebt != 0)
+                if(playerHand[1].isOnTable && cribDebt != 0)
                 {
-                    chooseCribCard(mImageView2, cardv2, crib);
-                    cardv2.isOnTable = false;
+                    chooseCribCard(mImageView2, playerHand[1], crib);
+                    playerHand[1].isOnTable = false;
                     cribDebt--;
                 }
                 if(cribDebt == 0)
@@ -199,10 +364,10 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                if(cardv3.isOnTable && cribDebt != 0)
+                if(playerHand[2].isOnTable && cribDebt != 0)
                 {
-                    chooseCribCard(mImageView3, cardv3, crib);
-                    cardv3.isOnTable = false;
+                    chooseCribCard(mImageView3, playerHand[2], crib);
+                    playerHand[2].isOnTable = false;
                     cribDebt--;
                 }
                 if(cribDebt == 0)
@@ -222,10 +387,10 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                if(cardv4.isOnTable && cribDebt != 0)
+                if(playerHand[3].isOnTable && cribDebt != 0)
                 {
-                    chooseCribCard(mImageView4, cardv4, crib);
-                    cardv4.isOnTable = false;
+                    chooseCribCard(mImageView4, playerHand[3], crib);
+                    playerHand[3].isOnTable = false;
                     cribDebt--;
                 }
                 if(cribDebt == 0)
@@ -244,10 +409,10 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                if(cardv5.isOnTable && cribDebt != 0)
+                if(playerHand[4].isOnTable && cribDebt != 0)
                 {
-                    chooseCribCard(mImageView5, cardv5, crib);
-                    cardv5.isOnTable = false;
+                    chooseCribCard(mImageView5, playerHand[4], crib);
+                    playerHand[4].isOnTable = false;
                     cribDebt--;
                 }
                 if(cribDebt == 0)
@@ -266,10 +431,10 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                if(cardv6.isOnTable && cribDebt != 0)
+                if(playerHand[5].isOnTable && cribDebt != 0)
                 {
-                    chooseCribCard(mImageView6, cardv6, crib);
-                    cardv6.isOnTable = false;
+                    chooseCribCard(mImageView6, playerHand[5], crib);
+                    playerHand[5].isOnTable = false;
                     cribDebt--;
                 }
                 if(cribDebt == 0)
@@ -499,8 +664,9 @@ public class GameActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(card1Print);
         canvas.drawBitmap(card1, 20, 20, null);
         mImageView.setImageBitmap(card1);
-        cardv1 = gameCard;
-        cardv1.isOnTable = true;
+        playerHand[0] = gameCard;
+        playerHand[0].isOnTable = true;
+        playerHand[0].isPlayers = true;
 
 
         mImageView2 = (ImageButton) findViewById(R.id.ivtwo);
@@ -510,8 +676,9 @@ public class GameActivity extends AppCompatActivity {
         Canvas canvas2 = new Canvas(card2Print);
         canvas2.drawBitmap(card2, 20, 20, null);
         mImageView2.setImageBitmap(card2);
-        cardv2 = gameCard;
-        cardv2.isOnTable = true;
+        playerHand[1] = gameCard;
+        playerHand[1].isOnTable = true;
+        playerHand[1].isPlayers = true;
 
 
         mImageView3 = (ImageButton) findViewById(R.id.ivthree);
@@ -521,8 +688,9 @@ public class GameActivity extends AppCompatActivity {
         Canvas canvas3 = new Canvas(card3Print);
         canvas3.drawBitmap(card3, 20, 20, null);
         mImageView3.setImageBitmap(card3);
-        cardv3 = gameCard;
-        cardv3.isOnTable = true;
+        playerHand[2] = gameCard;
+        playerHand[2].isOnTable = true;
+        playerHand[2].isPlayers = true;
 
 
         mImageView4 = (ImageButton) findViewById(R.id.ivfour);
@@ -532,8 +700,9 @@ public class GameActivity extends AppCompatActivity {
         Canvas canvas4 = new Canvas(card4Print);
         canvas4.drawBitmap(card4, 20, 20, null);
         mImageView4.setImageBitmap(card4);
-        cardv4 = gameCard;
-        cardv4.isOnTable = true;
+        playerHand[3] = gameCard;
+        playerHand[3].isOnTable = true;
+        playerHand[3].isPlayers = true;
 
 
         mImageView5 = (ImageButton) findViewById(R.id.ivfive);
@@ -543,8 +712,9 @@ public class GameActivity extends AppCompatActivity {
         Canvas canvas5 = new Canvas(card5Print);
         canvas5.drawBitmap(card5, 20, 20, null);
         mImageView5.setImageBitmap(card5);
-        cardv5 = gameCard;
-        cardv5.isOnTable = true;
+        playerHand[4] = gameCard;
+        playerHand[4].isOnTable = true;
+        playerHand[4].isPlayers = true;
 
 
         mImageView6 = (ImageButton) findViewById(R.id.ivsix);
@@ -554,8 +724,9 @@ public class GameActivity extends AppCompatActivity {
         Canvas canvas6 = new Canvas(card6Print);
         canvas6.drawBitmap(card6, 20, 20, null);
         mImageView6.setImageBitmap(card6);
-        cardv6 = gameCard;
-        cardv6.isOnTable = true;
+        playerHand[5] = gameCard;
+        playerHand[5].isOnTable = true;
+        playerHand[5].isPlayers = true;
     }
 
 

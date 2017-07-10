@@ -117,5 +117,13 @@
             android:background="@null"
             app:srcCompat="@drawable/blank_card" />
 
+        <ImageView
+            android:id="@+id/deckimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/ivfour"
+            app:srcCompat="@drawable/back_card" />
+
     </RelativeLayout>
 </LinearLayout>

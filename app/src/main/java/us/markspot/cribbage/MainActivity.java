@@ -13,12 +13,14 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import static android.R.attr.bitmap;
 import static android.R.attr.id;
+import static android.os.Build.VERSION_CODES.M;
 import static us.markspot.cribbage.Card.Suit.CLUB;
 import static us.markspot.cribbage.Card.Suit.DIAMOND;
 import static us.markspot.cribbage.Card.Suit.HEART;
@@ -63,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         addListenerOnButton();
         addListenerOnButtonTwo();
         addListenerOnButtonResume();
+        addListenerOnHelp();
+
+
+
+
 
 
             }
@@ -91,6 +98,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void addListenerOnHelp() {
+
+        Button b = (Button) findViewById(R.id.help);
+
+        b.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+            startActivity(new Intent(MainActivity.this,Pop.class));
+
+
+
+
+
+
+            }
+
+        });
+
+    }
+
+
+
 
 
     public void addListenerOnButtonTwo() {
@@ -155,25 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void addListenerOnButtonFour() {
 
-        imageButton2 = (ImageButton) findViewById(R.id.backtwo);
-
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                setContentView(R.layout.activity_main);
-                addListenerOnButton();
-                addListenerOnButtonTwo();
-                addListenerOnButtonResume();
-
-            }
-
-        });
-
-    }
 
 
 

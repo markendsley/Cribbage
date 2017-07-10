@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.Random;
@@ -36,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     ImageButton mImageView5;
     ImageButton mImageView6;
 
+    ImageView splitImageView;
+
     Card cardv1;
     Card cardv2;
     Card cardv3;
@@ -49,8 +52,11 @@ public class GameActivity extends AppCompatActivity {
 
     Deck deck = new Deck();
     Card gameCard;
+    Card splitCard;
 
     int cribDebt = 2;
+    int playerScore = 0;
+    int enemyScore = 0;
 
 
     @Override
@@ -67,7 +73,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         drawPlayerHand();
-
+        drawEnemyHand();
 
 
 
@@ -85,21 +91,39 @@ public class GameActivity extends AppCompatActivity {
     public void playPhase()
     {
 
-
+        enemyChooseCribCards();
+        drawSplitCard();
 
     }
 
-    public void dealEnemyHand()
+    public void drawEnemyHand()
     {
         for(int i=0;i<6;i++)
         {
             enemyHand[i] = deck.getRandomCard();
+            enemyHand[i].isOnTable = true;
         }
     }
 
+    public Card createEmptyCard()
+    {
+        Card card = new Card(0,HEART);
+        return card;
 
+    }
 
+    public void drawSplitCard()
+    {
+        splitCard = deck.getRandomCard();
 
+        splitImageView = (ImageView) findViewById(R.id.deckimage);
+        Bitmap split = bitmapChooser(deck, splitCard);
+        Bitmap splitPrint = Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(splitPrint);
+        canvas.drawBitmap(split, 20, 20, null);
+        splitImageView.setImageBitmap(split);
+
+    }
 
 
 
@@ -269,6 +293,7 @@ public class GameActivity extends AppCompatActivity {
             enemyHand[a].sendToCrib();
             drawCribCard(crib.findEmptySlot());
             crib.insertCard(enemyHand[a]);
+            enemyHand[a].isOnTable = false;
         }
     }
 

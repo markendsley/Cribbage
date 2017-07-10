@@ -20,7 +20,43 @@
             android:layout_marginTop="147dp"
             android:text="Difficulty"
             android:textColor="@android:color/white"
-            android:textSize="32sp"/>
+            android:textSize="32sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/seekBar4"
+            android:layout_below="@+id/textView"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            app:srcCompat="@drawable/tallbar" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_toEndOf="@+id/textView"
+            app:srcCompat="@drawable/tallbar" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView"
+            android:layout_alignTop="@+id/seekBar4"
+            android:layout_marginStart="23dp"
+            app:srcCompat="@drawable/smallbar" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/seekBar4"
+            android:layout_marginEnd="29dp"
+            android:layout_toStartOf="@+id/imageView2"
+            app:srcCompat="@drawable/smallbar" />
 
         <SeekBar
             android:id="@+id/seekBar4"

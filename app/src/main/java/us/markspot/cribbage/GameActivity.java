@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.Random;
+
 
 import static us.markspot.cribbage.Card.Suit.CLUB;
 import static us.markspot.cribbage.Card.Suit.DIAMOND;
@@ -25,10 +28,12 @@ import static us.markspot.cribbage.Card.Suit.SPADE;
 
 public class GameActivity extends AppCompatActivity {
 
-    ImageButton imageButton;
+    ImageButton imageButton1;
     ImageButton imageButton2;
     ImageButton imageButton3;
     ImageButton imageButton4;
+    ImageButton imageButton5;
+    ImageButton imageButton6;
 
     ImageButton mImageView;
     ImageButton mImageView2;
@@ -60,16 +65,21 @@ public class GameActivity extends AppCompatActivity {
     int cribDebt = 2;
     int playerScore = 0;
     int enemyScore = 0;
+    int playerCardsLeft = 4;
+    int enemyCardsLeft = 4;
+
 
     int playerNumberCardsInPlay = 0;
     int enemyNumberCardsInPlay = 0;
     int numberCardsInPlay = 0;
 
-    Card[] cardsInPlay = new Card[8];
+    Card[] cardsInPlay = new Card[20];
     boolean playerTurn = true;
 
 
     int roundCounter = 0;
+
+
 
 
     @Override
@@ -101,14 +111,35 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+
+
+    public void setRoundCounter()
+    {
+        TextView tv = (TextView)findViewById(R.id.roundcounter);
+        tv.setText(String.valueOf(roundCounter));
+    }
+
+
+
     public void playPhase()
     {
 
+        playerCardsLeft = 4;
+        enemyCardsLeft = 4;
+        numberCardsInPlay = 0;
+        addPlayListener1();
+        addPlayListener2();
+        addPlayListener3();
+        addPlayListener4();
+        addPlayListener5();
+        addPlayListener6();
         enemyChooseCribCards();
         drawSplitCard();
         createPlayImages();
 
-        addPlayListener1();
+
+
+
 
     }
 
@@ -164,28 +195,257 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    public boolean canPlay(Card[] card)
+    {
+        for(int i=0;i<6;i++)
+        {
+            if(card[i].isOnTable && (card[i].value + roundCounter) <= 31)
+            {
+
+                return true;
+
+            }
+
+        }
+        return false;
+    }
+
+    public void enemyTurn()
+    {
+
+        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+        {
+            roundCounter = 0;
+            setRoundCounter();
+
+        }
+
+
+        if(canPlay(enemyHand)==true && enemyCardsLeft != 0)
+        {
+
+
+
+
+
+
+
+
+            Random rand1 = new Random();
+            int a;
+            a = rand1.nextInt(6);
+
+            while((enemyHand[a].value + roundCounter) > 31 || enemyHand[a].isOnTable != true )
+            {
+                a = rand1.nextInt(6);
+            }
+
+            cardsInPlay[numberCardsInPlay] = enemyHand[a];
+
+            setPlayImage(enemyHand[a]);
+            roundCounter += enemyHand[a].value;
+            enemyCardsLeft--;
+            numberCardsInPlay++;
+
+            enemyHand[a].isOnTable = false;
+            enemyHand[a].inPlay = true;
+
+            setRoundCounter();
+
+
+
+            if(canPlay(playerHand) == false && canPlay(enemyHand) == true && enemyCardsLeft != 0)
+            {
+
+
+               while(canPlay(enemyHand) == true && enemyCardsLeft !=0 && canPlay(playerHand) != true)
+               {
+
+
+                   a = rand1.nextInt(6);
+
+                   while((enemyHand[a].value + roundCounter) > 31 || enemyHand[a].isOnTable != true )
+                   {
+                       a = rand1.nextInt(6);
+                   }
+
+                   cardsInPlay[numberCardsInPlay] = enemyHand[a];
+
+                   setPlayImage(enemyHand[a]);
+                   roundCounter += enemyHand[a].value;
+                   enemyCardsLeft--;
+                   numberCardsInPlay++;
+
+                   enemyHand[a].isOnTable = false;
+                   enemyHand[a].inPlay = true;
+
+                   setRoundCounter();
+
+
+               }
+
+               if(playerCardsLeft < 1 && canPlay(enemyHand) == true){
+                   while(enemyCardsLeft > 0){
+                       a = rand1.nextInt(6);
+
+                       while((enemyHand[a].value + roundCounter) > 31 || enemyHand[a].isOnTable != true )
+                       {
+                           a = rand1.nextInt(6);
+                       }
+
+                       cardsInPlay[numberCardsInPlay] = enemyHand[a];
+
+                       setPlayImage(enemyHand[a]);
+                       roundCounter += enemyHand[a].value;
+                       enemyCardsLeft--;
+                       numberCardsInPlay++;
+
+                       enemyHand[a].isOnTable = false;
+                       enemyHand[a].inPlay = true;
+
+                       setRoundCounter();
+                   }
+
+               }
+
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                {
+                    roundCounter = 0;
+                    setRoundCounter();
+
+                    if(canPlay(enemyHand) == true) {
+
+
+                        while (enemyCardsLeft > 0 && canPlay(playerHand) == false) {
+                            a = rand1.nextInt(6);
+
+                            while ((enemyHand[a].value + roundCounter) > 31 || enemyHand[a].isOnTable != true) {
+                                a = rand1.nextInt(6);
+                            }
+
+                            cardsInPlay[numberCardsInPlay] = enemyHand[a];
+
+                            setPlayImage(enemyHand[a]);
+                            roundCounter += enemyHand[a].value;
+                            enemyCardsLeft--;
+                            numberCardsInPlay++;
+
+                            enemyHand[a].isOnTable = false;
+                            enemyHand[a].inPlay = true;
+
+                            setRoundCounter();
+
+                            if(playerCardsLeft < 1 && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                            {
+                                roundCounter = 0;
+                                setRoundCounter();
+                            }
+                        }
+
+                    }
+
+                }
+
+
+
+            }
+
+
+
+
+
+
+        for(int i=0;i<6;i++)
+        {
+            System.out.println(enemyHand[i].value + " " + enemyHand[i].isOnTable);
+        }
+
+
+
+        }
+
+
+        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+        {
+            roundCounter = 0;
+            setRoundCounter();
+
+        }
+
+
+
+
+
+
+
+
+
+
+        playerTurn = true;
+
+
+    }
+
 
     public void addPlayListener1() {
 
-        imageButton2 = (ImageButton) findViewById(R.id.ivone);
+        imageButton1 = (ImageButton) findViewById(R.id.ivone);
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        imageButton1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-            if(playerHand[0].isOnTable && (playerHand[0].value + roundCounter <= 31) && playerTurn == true)
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
                 {
+                    roundCounter = 0;
+                    setRoundCounter();
+                }
+
+
+
+
+
+            if(playerHand[0].isOnTable && (playerHand[0].value + roundCounter) <= 31 )
+                {
+
+
+
+
+
                     cardsInPlay[numberCardsInPlay] = playerHand[0];
                     playerHand[0].inPlay = true;
                     playerHand[0].isOnTable = false;
 
                     Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
 
-                    imageButton2.setImageBitmap(bitmap2);
+                    imageButton1.setImageBitmap(bitmap2);
 
                     setPlayImage(playerHand[0]);
 
                     roundCounter += playerHand[0].value;
+                    numberCardsInPlay++;
+                    playerTurn = false;
+
+
+                    playerCardsLeft--;
+                    setRoundCounter();
+
+
+
+                    if(canPlay(playerHand) != true)
+                    {
+                        while(canPlay(enemyHand)==true && enemyCardsLeft > 0)
+                        {
+                            enemyTurn();
+                        }
+                    }else{
+                        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                        {
+                            roundCounter = 0;
+                            setRoundCounter();
+                        }
+                        enemyTurn();
+                    }
 
 
                 }
@@ -205,7 +465,56 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                {
+                    roundCounter = 0;
+                    setRoundCounter();
+                }
 
+
+
+
+                if(playerHand[1].isOnTable && (playerHand[1].value + roundCounter) <= 31 )
+                {
+
+
+
+
+
+                    cardsInPlay[numberCardsInPlay] = playerHand[1];
+                    playerHand[1].inPlay = true;
+                    playerHand[1].isOnTable = false;
+
+                    Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
+
+                    imageButton2.setImageBitmap(bitmap2);
+
+                    setPlayImage(playerHand[1]);
+
+                    roundCounter += playerHand[1].value;
+                    numberCardsInPlay++;
+                    playerTurn = false;
+                    setRoundCounter();
+
+                    playerCardsLeft--;
+
+                    if(canPlay(playerHand) != true)
+                    {
+                        while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
+                        {
+                            enemyTurn();
+                        }
+                    }else{
+                        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                        {
+                            roundCounter = 0;
+                            setRoundCounter();
+                        }
+                        enemyTurn();
+                    }
+
+
+                }
 
 
             }
@@ -216,13 +525,62 @@ public class GameActivity extends AppCompatActivity {
 
     public void addPlayListener3() {
 
-        imageButton2 = (ImageButton) findViewById(R.id.ivthree);
+        imageButton3 = (ImageButton) findViewById(R.id.ivthree);
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        imageButton3.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                {
+                    roundCounter = 0;
+                    setRoundCounter();
+                }
 
+
+
+
+
+                if(playerHand[2].isOnTable && (playerHand[2].value + roundCounter) <= 31 )
+                {
+
+
+
+
+
+                    cardsInPlay[numberCardsInPlay] = playerHand[2];
+                    playerHand[2].inPlay = true;
+                    playerHand[2].isOnTable = false;
+
+                    Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
+
+                    imageButton3.setImageBitmap(bitmap2);
+
+                    setPlayImage(playerHand[2]);
+
+                    roundCounter += playerHand[2].value;
+                    numberCardsInPlay++;
+                    playerTurn = false;
+                    setRoundCounter();
+
+                    playerCardsLeft--;
+
+                    if(canPlay(playerHand) != true)
+                    {
+                        while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
+                        {
+                            enemyTurn();
+                        }
+                    }else{
+                        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                        {
+                            roundCounter = 0;
+                            setRoundCounter();
+                        }
+                        enemyTurn();
+                    }
+
+                }
 
 
             }
@@ -233,14 +591,62 @@ public class GameActivity extends AppCompatActivity {
 
     public void addPlayListener4() {
 
-        imageButton2 = (ImageButton) findViewById(R.id.ivfour);
+        imageButton4 = (ImageButton) findViewById(R.id.ivfour);
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        imageButton4.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                {
+                    roundCounter = 0;
+                    setRoundCounter();
+                }
 
 
+
+
+                if(playerHand[3].isOnTable && (playerHand[3].value + roundCounter) <= 31 )
+                {
+
+
+
+
+
+
+                    cardsInPlay[numberCardsInPlay] = playerHand[3];
+                    playerHand[3].inPlay = true;
+                    playerHand[3].isOnTable = false;
+
+                    Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
+
+                    imageButton4.setImageBitmap(bitmap2);
+
+                    setPlayImage(playerHand[3]);
+
+                    roundCounter += playerHand[3].value;
+                    numberCardsInPlay++;
+                    playerTurn = false;
+                    setRoundCounter();
+
+                    playerCardsLeft--;
+
+                    if(canPlay(playerHand) != true)
+                    {
+                        while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
+                        {
+                            enemyTurn();
+                        }
+                    }else{
+                        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                        {
+                            roundCounter = 0;
+                            setRoundCounter();
+                        }
+                        enemyTurn();
+                    }
+
+                }
 
             }
 
@@ -250,13 +656,63 @@ public class GameActivity extends AppCompatActivity {
 
     public void addPlayListener5() {
 
-        imageButton2 = (ImageButton) findViewById(R.id.ivfive);
+        imageButton5 = (ImageButton) findViewById(R.id.ivfive);
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        imageButton5.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                {
+                    roundCounter = 0;
+                    setRoundCounter();
+                }
 
+
+
+
+                if(playerHand[4].isOnTable && (playerHand[4].value + roundCounter) <= 31 )
+                {
+
+
+
+
+
+
+                    cardsInPlay[numberCardsInPlay] = playerHand[4];
+                    playerHand[4].inPlay = true;
+                    playerHand[4].isOnTable = false;
+
+                    Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
+
+                    imageButton5.setImageBitmap(bitmap2);
+
+                    setPlayImage(playerHand[4]);
+
+                    roundCounter += playerHand[4].value;
+                    numberCardsInPlay++;
+                    playerTurn = false;
+                    setRoundCounter();
+
+                    playerCardsLeft--;
+
+                    if(canPlay(playerHand) != true)
+                    {
+                        while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
+                        {
+                            enemyTurn();
+                        }
+                    }else{
+                        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                        {
+                            roundCounter = 0;
+                            setRoundCounter();
+
+                        }
+                        enemyTurn();
+                    }
+
+                }
 
 
             }
@@ -267,13 +723,58 @@ public class GameActivity extends AppCompatActivity {
 
     public void addPlayListener6() {
 
-        imageButton2 = (ImageButton) findViewById(R.id.ivsix);
+        imageButton6 = (ImageButton) findViewById(R.id.ivsix);
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        imageButton6.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                {
+                    roundCounter = 0;
+                    setRoundCounter();
+                }
 
+
+
+
+                if(playerHand[5].isOnTable && (playerHand[5].value + roundCounter) <= 31 )
+                {
+                    cardsInPlay[numberCardsInPlay] = playerHand[5];
+                    playerHand[5].inPlay = true;
+                    playerHand[5].isOnTable = false;
+
+                    Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
+
+                    imageButton6.setImageBitmap(bitmap2);
+
+                    setPlayImage(playerHand[5]);
+
+                    roundCounter += playerHand[5].value;
+                    numberCardsInPlay++;
+                    playerTurn = false;
+                    setRoundCounter();
+
+                    playerCardsLeft--;
+
+                    if(canPlay(playerHand) != true)
+                    {
+                        while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
+                        {
+                            enemyTurn();
+                        }
+                    }else{
+                        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                        {
+                            roundCounter = 0;
+                            setRoundCounter();
+                        }
+                        enemyTurn();
+                    }
+
+
+
+                }
 
 
             }

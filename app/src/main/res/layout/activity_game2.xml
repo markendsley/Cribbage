@@ -129,18 +129,18 @@
             android:id="@+id/playone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/ivfive"
-            android:layout_marginBottom="120dp"
-            android:layout_toStartOf="@+id/ivfive"
-            app:srcCompat="@drawable/blank_card" />
+            app:srcCompat="@drawable/blank_card"
+            android:layout_marginTop="59dp"
+            android:layout_below="@+id/roundcounter"
+            android:layout_toStartOf="@+id/cribthree" />
 
         <ImageView
             android:id="@+id/playtwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/playone"
-            android:layout_toEndOf="@+id/ivfive"
-            app:srcCompat="@drawable/blank_card" />
+            app:srcCompat="@drawable/blank_card"
+            android:layout_alignTop="@+id/playone"
+            android:layout_toEndOf="@+id/playone" />
 
         <ImageView
             android:id="@+id/playthree"
@@ -189,6 +189,15 @@
             android:layout_alignBottom="@+id/playseven"
             android:layout_toEndOf="@+id/playseven"
             app:srcCompat="@drawable/blank_card" />
+
+        <TextView
+            android:id="@+id/roundcounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cribfour"
+            android:layout_marginTop="39dp"
+            android:layout_toEndOf="@+id/playseven"
+            android:text="0" />
 
     </RelativeLayout>
 </LinearLayout>

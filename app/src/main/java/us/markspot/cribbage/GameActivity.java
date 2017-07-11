@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-
+    //Sets Round Counter To Current Value
     public void setRoundCounter()
     {
         TextView tv = (TextView)findViewById(R.id.roundcounter);
@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-
+    //Phase Initiated After Player Gives To Crib
     public void playPhase()
     {
 
@@ -143,6 +143,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //Draws Hand For AI
     public void drawEnemyHand()
     {
         for(int i=0;i<6;i++)
@@ -154,6 +155,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    //Creates Card With A Value Of Zero (This function has no use yet)
     public Card createEmptyCard()
     {
         Card card = new Card(0,HEART);
@@ -161,6 +163,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //Draws Split Card And Places On Top Of Deck
     public void drawSplitCard()
     {
         splitCard = deck.getRandomCard();
@@ -177,7 +180,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
+    //Adds Listener And Functionality For Back Button
     public void addListenerOnButtonFour() {
 
         imageButton2 = (ImageButton) findViewById(R.id.backtwo);
@@ -195,6 +198,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //Tests If Any Cards In A Hand Can Be Played
     public boolean canPlay(Card[] card)
     {
         for(int i=0;i<6;i++)
@@ -210,6 +214,7 @@ public class GameActivity extends AppCompatActivity {
         return false;
     }
 
+    //Enemy Turn Handler This Function Is A MONSTER
     public void enemyTurn()
     {
 
@@ -374,19 +379,12 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
         playerTurn = true;
 
 
     }
 
-
+    //Listeners On Cards For Play Phase These Functions Are The Same
     public void addPlayListener1() {
 
         imageButton1 = (ImageButton) findViewById(R.id.ivone);
@@ -783,7 +781,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-
+    //Sets Image of Card In Play For The Next Open Place
     public void setPlayImage(Card card)
     {
         Bitmap bitmap2 = bitmapChooser(deck,card);
@@ -793,6 +791,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //Creates Areas For Play Cards To Be Placed
     public void createPlayImages()
     {
         playImages[0] = (ImageView) findViewById(R.id.playone);
@@ -807,11 +806,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
+    //Listeners On Cards For Crib Phase
     public void addCribListener1() {
 
         imageButton2 = (ImageButton) findViewById(R.id.ivone);
@@ -947,7 +942,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-
+    //AI Player Chooses Cards Out Of Hand For Crib
     public void enemyChooseCribCards()
     {
         Random rand1 = new Random();
@@ -965,7 +960,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
+    //Moves Card From Player Hand To Crib
     public void chooseCribCard(ImageButton imageButton, Card card, Crib crib)
     {
         Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.blank_card);
@@ -982,6 +977,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //Draws Card In Crib In Next Empty Slot
     public void drawCribCard(int slot)
     {
         if(slot == 1)
@@ -1145,6 +1141,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //Kills Activity
     public void terminate()
     {
         finish();
@@ -1156,6 +1153,7 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Creates Player Hand
     public void drawPlayerHand()
     {
         mImageView = (ImageButton) findViewById(R.id.ivone);

@@ -23,4 +23,6 @@
 
     </style>
 
+    <color name="textColor" >#ffffff</color>
+
 </resources>

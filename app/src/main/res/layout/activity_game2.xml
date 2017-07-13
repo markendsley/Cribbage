@@ -46,11 +46,11 @@
             android:id="@+id/ivthree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/ivtwo"
+            android:layout_alignStart="@+id/ivtwo"
             android:layout_marginBottom="22dp"
             android:background="@null"
-            app:srcCompat="@drawable/background_fill"
-            android:layout_above="@+id/ivtwo"
-            android:layout_alignStart="@+id/ivtwo" />
+            app:srcCompat="@drawable/background_fill" />
 
         <ImageButton
             android:id="@+id/ivfour"
@@ -129,18 +129,18 @@
             android:id="@+id/playone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/blank_card"
-            android:layout_marginTop="59dp"
             android:layout_below="@+id/roundcounter"
-            android:layout_toStartOf="@+id/cribthree" />
+            android:layout_marginTop="59dp"
+            android:layout_toStartOf="@+id/cribthree"
+            app:srcCompat="@drawable/blank_card" />
 
         <ImageView
             android:id="@+id/playtwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/blank_card"
             android:layout_alignTop="@+id/playone"
-            android:layout_toEndOf="@+id/playone" />
+            android:layout_toEndOf="@+id/playone"
+            app:srcCompat="@drawable/blank_card" />
 
         <ImageView
             android:id="@+id/playthree"
@@ -197,7 +197,34 @@
             android:layout_below="@+id/cribfour"
             android:layout_marginTop="39dp"
             android:layout_toEndOf="@+id/playseven"
-            android:text="0" />
+            android:text="0"
+            android:textColor="@color/textColor"/>
+
+        <TextView
+            android:id="@+id/enemyscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/deckimage"
+            android:text="0"
+            android:textColor="@color/textColor"/>
+
+        <TextView
+            android:id="@+id/playerscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/cribtwo"
+            android:layout_alignStart="@+id/enemyscore"
+            android:text="0"
+            android:textColor="@color/textColor"/>
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/thing"
+            android:layout_alignBottom="@+id/cribtwo"
+            android:layout_toEndOf="@+id/playfour" />
 
     </RelativeLayout>
 </LinearLayout>

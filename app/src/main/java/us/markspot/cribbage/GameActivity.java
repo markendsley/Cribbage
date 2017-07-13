@@ -53,8 +53,8 @@ public class GameActivity extends AppCompatActivity {
     Card cardv5;
     Card cardv6;
 
-    Card[] enemyHand = new Card[6];
-    Card[] playerHand = new Card[6];
+    Card[] enemyHand = new Card[7];
+    Card[] playerHand = new Card[7];
 
     Crib crib;
 
@@ -65,6 +65,8 @@ public class GameActivity extends AppCompatActivity {
     int cribDebt = 2;
     int playerScore = 0;
     int enemyScore = 0;
+    int playerHandScore = 0;
+    int enemyHandScore = 0;
     int playerCardsLeft = 4;
     int enemyCardsLeft = 4;
 
@@ -111,6 +113,173 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    public int handScoreCounter(Card[] hand, Card splitCard)
+    {
+        Card[] tempHand;
+        tempHand = hand;
+        tempHand[6] = splitCard;
+
+        int score = 0;
+        int j = 0;
+        int k = 0;
+        int counter = 0;
+
+        for(j=0;j<7;j++)
+        {
+            for(k=0;k<7;k++)
+            {
+                if(k==j)
+                    continue;
+                //15
+                if(tempHand[k].isOnTable == true && tempHand[j].isOnTable ==  true && tempHand[k].value +tempHand[j].value == 15)
+                    score += 1;
+                //Pair, Pair Royal, Double Royal, Double Pair Royal
+                if(tempHand[k].isOnTable == true && tempHand[j].isOnTable ==  true && tempHand[k].value == tempHand[j].value &&
+                        tempHand[j].isKing == false && tempHand[j].isQueen == false && tempHand[j].isJack == false &&
+                        tempHand[k].isKing == false && tempHand[k].isQueen == false && tempHand[k].isJack == false)
+                    score +=1;
+                if(tempHand[k].isOnTable == true && tempHand[j].isOnTable ==  true && tempHand[k].value == tempHand[j].value &&
+                        tempHand[j].isKing == true && tempHand[k].isKing == true)
+                    score+=1;
+                if(tempHand[k].isOnTable == true && tempHand[j].isOnTable ==  true && tempHand[k].value == tempHand[j].value &&
+                        tempHand[j].isQueen == true && tempHand[k].isQueen == true)
+                    score+=1;
+                if(tempHand[k].isOnTable == true && tempHand[j].isOnTable ==  true && tempHand[k].value == tempHand[j].value &&
+                        tempHand[j].isJack == true && tempHand[k].isJack == true)
+                    score+=1;
+
+
+            }
+        }
+
+
+        //Four and Five Card Flush
+        for(j=0;j<7;j++)
+        {
+            if(tempHand[j].getSuit() == HEART)
+                counter++;
+        }
+        if(counter == 4)
+            score += 4;
+        else if(counter == 5)
+            score += 5;
+        counter = 0;
+
+        for(j=0;j<7;j++)
+        {
+            if(tempHand[j].getSuit() == SPADE)
+                counter++;
+        }
+        if(counter == 4)
+            score += 4;
+        else if(counter == 5)
+            score += 5;
+        counter = 0;
+
+        for(j=0;j<7;j++)
+        {
+            if(tempHand[j].getSuit() == DIAMOND)
+                counter++;
+        }
+        if(counter == 4)
+            score += 4;
+        else if(counter == 5)
+            score += 5;
+        counter = 0;
+
+        for(j=0;j<7;j++)
+        {
+            if(tempHand[j].getSuit() == CLUB)
+                counter++;
+        }
+        if(counter == 4)
+            score += 4;
+        else if(counter == 5)
+            score += 5;
+        counter = 0;
+
+        //Nobs
+        for(int i = 0;i<6;i++)
+        {
+            if(tempHand[i].getSuit() == tempHand[6].getSuit() && tempHand[i].isOnTable == true && tempHand[i].isJack == true)
+                score++;
+        }
+
+        //Run
+        score += runCount(tempHand);
+
+        return score;
+    }
+
+    public int playScore(Card[] play, int numCards)
+    {
+        int score = 0;
+
+
+        if(roundCounter == 15)
+            score = score + 2;
+
+        for(int i = numCards - 1; i>0;i--)
+        {
+
+        }
+
+        return score;
+    }
+
+
+    public int runCount(Card[] hand)
+    {
+        int[] array = new int[5];
+        int j = 0;
+
+        for(int i=0;i<7;i++)
+        {
+            if(hand[i].isOnTable == false)
+                continue;
+
+            if(hand[i].isJack == true)
+                array[j] = 11;
+            else if(hand[i].isQueen == true)
+                array[j] = 12;
+            else if (hand[i].isKing == true)
+                array[j] = 13;
+            else
+                array[j] = hand[i].value;
+
+        }
+
+        //Bubble Sort
+        int temp = 0;
+
+        for(int i=0;i<5;i++)
+        {
+            for(j=1;j<(5-i);j++)
+            {
+                if(array[j-1]>array[j])
+                {
+                    temp = array[j-1];
+                    array[j-1] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+
+        int score = 0;
+
+        for(int i=1;i<5;i++)
+        {
+            if(array[i-1] == (array[i] - 1))
+                score++;
+
+            System.out.println(array[i-1]);
+        }
+
+        return score;
+    }
+
+
+
 
     //Sets Round Counter To Current Value
     public void setRoundCounter()
@@ -118,6 +287,19 @@ public class GameActivity extends AppCompatActivity {
         TextView tv = (TextView)findViewById(R.id.roundcounter);
         tv.setText(String.valueOf(roundCounter));
     }
+
+    public void setEnemyScore()
+    {
+        TextView tv = (TextView)findViewById(R.id.enemyscore);
+        tv.setText(String.valueOf(enemyScore));
+    }
+
+    public void setPlayerScore()
+    {
+        TextView tv = (TextView)findViewById(R.id.playerscore);
+        tv.setText(String.valueOf(playerScore));
+    }
+
 
 
     //Phase Initiated After Player Gives To Crib
@@ -136,7 +318,11 @@ public class GameActivity extends AppCompatActivity {
         enemyChooseCribCards();
         drawSplitCard();
         createPlayImages();
-
+        playerScore = handScoreCounter(playerHand,splitCard);
+        enemyScore = handScoreCounter(enemyHand,splitCard);
+        setEnemyScore();
+        setPlayerScore();
+        enemyTurn();
 
 
 
@@ -218,7 +404,7 @@ public class GameActivity extends AppCompatActivity {
     public void enemyTurn()
     {
 
-        if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+        if(canPlay(playerHand) == false && canPlay(enemyHand) == false)
         {
             roundCounter = 0;
             setRoundCounter();
@@ -313,7 +499,7 @@ public class GameActivity extends AppCompatActivity {
 
                }
 
-                if(canPlay(playerHand) == false && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                if(canPlay(playerHand) == false && canPlay(enemyHand) == false)
                 {
                     roundCounter = 0;
                     setRoundCounter();
@@ -340,7 +526,7 @@ public class GameActivity extends AppCompatActivity {
 
                             setRoundCounter();
 
-                            if(playerCardsLeft < 1 && canPlay(enemyHand) == false&& numberCardsInPlay < 8)
+                            if(playerCardsLeft < 1 && canPlay(enemyHand) == false)
                             {
                                 roundCounter = 0;
                                 setRoundCounter();
@@ -428,7 +614,8 @@ public class GameActivity extends AppCompatActivity {
                     playerCardsLeft--;
                     setRoundCounter();
 
-
+                    playerScore += playScore(cardsInPlay, numberCardsInPlay);
+                    setPlayerScore();
 
                     if(canPlay(playerHand) != true)
                     {
@@ -444,6 +631,7 @@ public class GameActivity extends AppCompatActivity {
                         }
                         enemyTurn();
                     }
+
 
 
                 }
@@ -495,6 +683,9 @@ public class GameActivity extends AppCompatActivity {
                     setRoundCounter();
 
                     playerCardsLeft--;
+
+                    playerScore += playScore(cardsInPlay, numberCardsInPlay);
+                    setPlayerScore();
 
                     if(canPlay(playerHand) != true)
                     {
@@ -563,6 +754,9 @@ public class GameActivity extends AppCompatActivity {
 
                     playerCardsLeft--;
 
+                    playerScore += playScore(cardsInPlay, numberCardsInPlay);
+                    setPlayerScore();
+
                     if(canPlay(playerHand) != true)
                     {
                         while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
@@ -629,6 +823,9 @@ public class GameActivity extends AppCompatActivity {
 
                     playerCardsLeft--;
 
+                    playerScore += playScore(cardsInPlay, numberCardsInPlay);
+                    setPlayerScore();
+
                     if(canPlay(playerHand) != true)
                     {
                         while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
@@ -694,6 +891,9 @@ public class GameActivity extends AppCompatActivity {
 
                     playerCardsLeft--;
 
+                    playerScore += playScore(cardsInPlay, numberCardsInPlay);
+                    setPlayerScore();
+
                     if(canPlay(playerHand) != true)
                     {
                         while(canPlay(enemyHand)==true&& enemyCardsLeft > 0)
@@ -754,6 +954,9 @@ public class GameActivity extends AppCompatActivity {
                     setRoundCounter();
 
                     playerCardsLeft--;
+
+                    playerScore += playScore(cardsInPlay, numberCardsInPlay);
+                    setPlayerScore();
 
                     if(canPlay(playerHand) != true)
                     {
